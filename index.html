@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fórmula 1 – Simples</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(to bottom, #111 0%, #1a1a2e 100%);
+      color: #eee;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #c8102e;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.6rem;
+      letter-spacing: 3px;
+      text-shadow: 3px 3px 6px #000;
+    }
+
+    .flag {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        #000 0,
+        #000 20px,
+        #fff 20px,
+        #fff 40px
+      );
+      opacity: 0.15;
+      animation: moveFlag 12s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes moveFlag {
+      0% { background-position: 0 0; }
+      100% { background-position: 400px 400px; }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #1f1f3a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(200,16,46,0.4);
+    }
+
+    .card-header {
+      background: #c8102e;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .card-body {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .position {
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: #ffcc00;
+      margin: 8px 0;
+    }
+
+    .team {
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .points {
+      font-size: 1.4rem;
+      margin-top: 12px;
+      color: #4dff88;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      color: #777;
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 2.1rem; }
+      .position { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="flag"></div>
+  <h1>FÓRMULA 1 2026</h1>
+</header>
+
+<div class="container">
+
+  <div class="grid" id="grid-pilotos">
+    <!-- Os cards serão criados via JavaScript -->
+  </div>
+
+</div>
+
+<footer>
+  Demonstração simples de Fórmula 1 • Feito com HTML + CSS + JS
+</footer>
+
+<script>
+  const pilotos = [
+    { pos: 1,  nome: "Max Verstappen",     equipe: "Red Bull Racing",   pts: 412, cor: "#1e41ff" },
+    { pos: 2,  nome: "Lando Norris",       equipe: "McLaren",           pts: 378, cor: "#ff6200" },
+    { pos: 3,  nome: "Charles Leclerc",    equipe: "Ferrari",           pts: 345, cor: "#ff0000" },
+    { pos: 4,  nome: "Oscar Piastri",      equipe: "McLaren",           pts: 321, cor: "#ff6200" },
+    { pos: 5,  nome: "Carlos Sainz",       equipe: "Ferrari",           pts: 289, cor: "#ff0000" },
+    { pos: 6,  nome: "Lewis Hamilton",     equipe: "Ferrari",           pts: 265, cor: "#ff0000" },
+    { pos: 7,  nome: "George Russell",     equipe: "Mercedes",          pts: 248, cor: "#00d2be" },
+  ];
+
+  const container = document.getElementById("grid-pilotos");
+
+  pilotos.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-header" style="background: ${p.cor}">${p.nome}</div>
+      <div class="card-body">
+        <div class="position">${p.pos}º</div>
+        <div>${p.equipe}</div>
+        <div class="points">${p.pts} pontos</div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+
+  // Pequeno efeito: destaca o líder a cada 6 segundos
+  setInterval(() => {
+    const lider = document.querySelectorAll(".card")[0];
+    if (lider) {
+      lider.style.boxShadow = "0 0 30px #ffcc00";
+      setTimeout(() => {
+        lider.style.boxShadow = "0 6px 15px rgba(0,0,0,0.6)";
+      }, 1800);
+    }
+  }, 6000);
+
+</script>
+</body>
+</html>
